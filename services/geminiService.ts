@@ -1,9 +1,15 @@
+
 import { GoogleGenAI, Type } from '@google/genai';
 import { AIFeedback } from '../types';
 
-// FIX: The API key must be obtained from process.env.API_KEY as per the guidelines.
-// This also resolves the TypeScript error regarding 'import.meta.env'.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// FIX: Switched from `import.meta.env.VITE_API_KEY` to `process.env.API_KEY` to adhere to the coding guidelines and resolve the TypeScript error.
+const apiKey = process.env.API_KEY;
+
+if (!apiKey) {
+    throw new Error("API_KEY is not set. Please add it to your environment variables.");
+}
+
+const ai = new GoogleGenAI({ apiKey: apiKey });
 
 const responseSchema = {
     type: Type.OBJECT,
